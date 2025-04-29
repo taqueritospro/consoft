@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>:)</title>
+</head>
+<body>
+    <h1>Labo04</h1>
+    <h2>Resultados del labo</h2>
+
+    <div id="ejercicio1"></div>
+    <div id="ejercicio2"></div>
+    <div id="ejercicio3"></div>
+    <div id="ejercicio4"></div>
+    <div id="ejercicio5"></div>
+    <div id="ejercicio6"></div>
+
+    <script>
+        // 1. Tabla de números con cuadrados y cubos
+        let num = parseInt(prompt("Ingrese un número para generar tabla de cuadrados y cubos: "));
+        document.getElementById('ejercicio1').innerHTML = "<h2>Tabla de Cuadrados y Cubos</h2><table border='1'><tr><th>Número</th><th>Cuadrado</th><th>Cubo</th></tr>";
+        for (let i = 1; i <= num; i++) {
+            document.getElementById('ejercicio1').innerHTML += `<tr><td>${i}</td><td>${i**2}</td><td>${i**3}</td></tr>`;
+        }
+        document.getElementById('ejercicio1').innerHTML += "</table>";
+
+        // 2. Suma aleatoria y medir el tiempo
+        let a = Math.floor(Math.random() * 10);
+        let b = Math.floor(Math.random() * 10);
+        let start = Date.now();
+        let respuesta = prompt(`¿Cuánto es ${a} + ${b}?`);
+        let end = Date.now();
+        let tiempo = (end - start) / 1000;
+        let correcto = (parseInt(respuesta) === (a+b));
+        document.getElementById('ejercicio2').innerHTML = `<h2>Resultado de Suma Aleatoria</h2><p>Tu respuesta fue ${correcto ? "correcta" : "incorrecta"}.</p><p>Tiempo: ${tiempo} segundos.</p>`;
+
+        // 3. Función contador
+        function contador(arr) {
+            let negativos = 0;
+            let ceros = 0;
+            let positivos = 0;
+            for (let x of arr) {
+                if (x < 0) negativos++;
+                else if (x === 0) ceros++;
+                else positivos++;
+            }
+            return { negativos, ceros, positivos };
+        }
+        console.assert(JSON.stringify(contador([1, -2, 0, 3, -5])) === JSON.stringify({negativos:2, ceros:1, positivos:2}), "Error en contador");
+        let res = contador([1, -2, 0, 3, -5]);
+        document.getElementById('ejercicio3').innerHTML = `<h2>Contador de Números</h2><p>Negativos: ${res.negativos}, Ceros: ${res.ceros}, Positivos: ${res.positivos}</p>`;
+
+        // 4. Función promedios
+        function promedios(matriz) {
+            let res = [];
+            for (let fila of matriz) {
+                let suma = fila.reduce((a, b) => a + b, 0);
+                res.push(suma / fila.length);
+            }
+            return res;
+        }
+        console.assert(JSON.stringify(promedios([[1,2,3],[4,5,6]])) === JSON.stringify([2,5]), "Error en promedios");
+        let res2 = promedios([[1,2,3],[4,5,6]]);
+        document.getElementById('ejercicio4').innerHTML = `<h2>Promedios de Filas</h2><p>${res2.join(", ")}</p>`;
+
+        // 5. Función inverso
+        function inverso(numero) {
+            return parseInt(numero.toString().split('').reverse().join(''));
+        }
+        console.assert(inverso(12345) === 54321, "Error en inverso");
+        let res3 = inverso(12345);
+        document.getElementById('ejercicio5').innerHTML = `<h2>Inverso de Número</h2><p>12345 inverso es ${res3}</p>`;
+
+        // 6. "Catálogo de Canciones"
+        class Cancion {
+            constructor(nombre, artista, duracion) {
+                this.nombre = nombre;
+                this.artista = artista;
+                this.duracion = duracion;
+            }
+            describir() {
+                return `${this.nombre} de ${this.artista} dura ${this.duracion} minutos.`;
+            }
+            esLarga() {
+                return this.duracion > 4;
+            }
+        }
+
+        let canciones = [
+            new Cancion("Fearless (Taylor's Version)", "Taylor Swift", 4.01),
+            new Cancion("All Too Well (10 Minute Version) (Taylor’s Version) [From The Vault]", "Taylor Swift", 10.13),
+            new Cancion("I Can See You (Taylor’s Version) [From The Vault]", "Taylor Swift", 4.33)
+        ];
+
+        let htmlCanciones = "<h2>Catálogo de Canciones</h2><ul>";
+        for (let cancion of canciones) {
+            htmlCanciones += `<li>${cancion.describir()} (${cancion.esLarga() ? "Larga" : "Corta"})</li>`;
+        }
+        htmlCanciones += "</ul>";
+        document.getElementById('ejercicio6').innerHTML = htmlCanciones;
+    </script>
+</body>
+</html>
