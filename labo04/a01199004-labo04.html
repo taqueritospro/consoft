@@ -14,90 +14,117 @@
     <div id="ejercicio4"></div>
     <div id="ejercicio5"></div>
     <div id="ejercicio6"></div>
-
+    
     <script>
-        // 1. Tabla de números con cuadrados y cubos
-        let num = parseInt(prompt("Ingrese un número para generar tabla de cuadrados y cubos: "));
-        document.getElementById('ejercicio1').innerHTML = "<h2>Tabla de Cuadrados y Cubos</h2><table border='1'><tr><th>Número</th><th>Cuadrado</th><th>Cubo</th></tr>";
-        for (let i = 1; i <= num; i++) {
-            document.getElementById('ejercicio1').innerHTML += `<tr><td>${i}</td><td>${i**2}</td><td>${i**3}</td></tr>`;
+        function tablaCuadradosCubos(n) {
+        let resultado = [];
+        for (let i = 1; i <= n; i++) {
+          resultado.push([i, i*i, i*i*i]);
         }
-        document.getElementById('ejercicio1').innerHTML += "</table>";
+        return resultado;
+        }
+        let tabla = tablaCuadradosCubos(5);
+        let html1 = "<h3>Ejercicio 1</h3><table border='1'><tr><th>N</th><th>Cuadrado</th><th>Cubo</th></tr>";
+        for (let fila of tabla) {
+            html1 += `<tr><td>${fila[0]}</td><td>${fila[1]}</td><td>${fila[2]}</td></tr>`;
+        }
+        html1 += "</table>";
+        document.getElementById('ejercicio1').innerHTML = html1;
+        console.assert(JSON.stringify(tablaCuadradosCubos(3)) === JSON.stringify([[1,1,1],[2,4,8],[3,9,27]]), "Test 1 falló");
 
-        // 2. Suma aleatoria y medir el tiempo
-        let a = Math.floor(Math.random() * 10);
-        let b = Math.floor(Math.random() * 10);
-        let start = Date.now();
-        let respuesta = prompt(`¿Cuánto es ${a} + ${b}?`);
-        let end = Date.now();
-        let tiempo = (end - start) / 1000;
-        let correcto = (parseInt(respuesta) === (a+b));
-        document.getElementById('ejercicio2').innerHTML = `<h2>Resultado de Suma Aleatoria</h2><p>Tu respuesta fue ${correcto ? "correcta" : "incorrecta"}.</p><p>Tiempo: ${tiempo} segundos.</p>`;
+        // Ejercicio 2: Suma con tiempo
+        let num1 = Math.floor(Math.random() * 100);
+        let num2 = Math.floor(Math.random() * 100);
+        let inicio = new Date();
+        let respuesta = parseInt(prompt(`¿Cuánto es ${num1} + ${num2}?`));
+        let fin = new Date();
+        let tiempo = (fin - inicio) / 1000;
+        let correcto = (respuesta === (num1 + num2));
+        let html2 = `<h3>Ejercicio 2</h3><p>Tu respuesta es <strong>${correcto ? "correcta" : "incorrecta"}</strong>.</p><p>Tiempo tomado: ${tiempo} segundos.</p>`;
+        document.getElementById('ejercicio2').innerHTML = html2;
 
-        // 3. Función contador
+        // Ejercicio 3: Contador
         function contador(arr) {
-            let negativos = 0;
-            let ceros = 0;
-            let positivos = 0;
+            let n = 0, z = 0, p = 0;
             for (let x of arr) {
-                if (x < 0) negativos++;
-                else if (x === 0) ceros++;
-                else positivos++;
+            if (x < 0) n++; else if (x === 0) z++; else p++;
             }
-            return { negativos, ceros, positivos };
+            return { negativos: n, ceros: z, positivos: p };
         }
-        console.assert(JSON.stringify(contador([1, -2, 0, 3, -5])) === JSON.stringify({negativos:2, ceros:1, positivos:2}), "Error en contador");
-        let res = contador([1, -2, 0, 3, -5]);
-        document.getElementById('ejercicio3').innerHTML = `<h2>Contador de Números</h2><p>Negativos: ${res.negativos}, Ceros: ${res.ceros}, Positivos: ${res.positivos}</p>`;
+        let prueba3 = contador([0, -1, 2, 0, 5, -7]);
+        let html3 = `<h3>Ejercicio 3</h3><p>Negativos: ${prueba3.negativos}, Ceros: ${prueba3.ceros}, Positivos: ${prueba3.positivos}</p>`;
+        document.getElementById('ejercicio3').innerHTML = html3;
+        console.assert(JSON.stringify(prueba3) === JSON.stringify({ negativos: 2, ceros: 2, positivos: 2 }), "Test 3 falló");
 
-        // 4. Función promedios
+        // Ejercicio 4: Promedios
         function promedios(matriz) {
-            let res = [];
-            for (let fila of matriz) {
-                let suma = fila.reduce((a, b) => a + b, 0);
-                res.push(suma / fila.length);
-            }
-            return res;
+        return matriz.map(fila => fila.reduce((acc, val) => acc + val, 0) / fila.length);
         }
-        console.assert(JSON.stringify(promedios([[1,2,3],[4,5,6]])) === JSON.stringify([2,5]), "Error en promedios");
-        let res2 = promedios([[1,2,3],[4,5,6]]);
-        document.getElementById('ejercicio4').innerHTML = `<h2>Promedios de Filas</h2><p>${res2.join(", ")}</p>`;
+        let prueba4 = promedios([[1,2,3], [4,5,6], [7,8,9]]);
+        let html4 = `<h3>Ejercicio 4</h3><p>Promedios: ${prueba4.join(', ')}</p>`;
+        document.getElementById('ejercicio4').innerHTML = html4;
+        console.assert(JSON.stringify(prueba4) === JSON.stringify([2, 5, 8]), "Test 4 falló");
 
-        // 5. Función inverso
-        function inverso(numero) {
-            return parseInt(numero.toString().split('').reverse().join(''));
+        // Ejercicio 5: Inverso
+        function inverso(n) {
+        let neg = n < 0;
+        let r = parseInt(Math.abs(n).toString().split('').reverse().join(''));
+            return neg ? -r : r;
         }
-        console.assert(inverso(12345) === 54321, "Error en inverso");
-        let res3 = inverso(12345);
-        document.getElementById('ejercicio5').innerHTML = `<h2>Inverso de Número</h2><p>12345 inverso es ${res3}</p>`;
+        let prueba5 = [inverso(123), inverso(456)];
+        let html5 = `<h3>Ejercicio 5</h3><p>Inversos: 123 → ${prueba5[0]}, 456 → ${prueba5[1]}</p>`;
+        document.getElementById('ejercicio5').innerHTML = html5;
+        console.assert(prueba5[0] === 321, "Test 5.1 falló");
+        console.assert(prueba5[1] === 654, "Test 5.2 falló");
 
-        // 6. "Catálogo de Canciones"
         class Cancion {
             constructor(nombre, artista, duracion) {
-                this.nombre = nombre;
-                this.artista = artista;
-                this.duracion = duracion;
+            this.nombre = nombre;
+            this.artista = artista;
+            this.duracion = duracion;
             }
             describir() {
-                return `${this.nombre} de ${this.artista} dura ${this.duracion} minutos.`;
+            return `${this.nombre} de ${this.artista} dura ${this.duracion} minutos.`;
             }
             esLarga() {
-                return this.duracion > 4;
+            return this.duracion > 5;
             }
         }
-
         let canciones = [
             new Cancion("Fearless (Taylor's Version)", "Taylor Swift", 4.01),
             new Cancion("All Too Well (10 Minute Version) (Taylor’s Version) [From The Vault]", "Taylor Swift", 10.13),
             new Cancion("I Can See You (Taylor’s Version) [From The Vault]", "Taylor Swift", 4.33)
         ];
-
-        let htmlCanciones = "<h2>Catálogo de Canciones</h2><ul>";
+        let html6 = "<h3>Ejercicio 6</h3><ul>";
         for (let cancion of canciones) {
-            htmlCanciones += `<li>${cancion.describir()} (${cancion.esLarga() ? "Larga" : "Corta"})</li>`;
+            html6 += `<li>${cancion.describir()} (${cancion.esLarga() ? "Larga" : "Corta"})</li>`;
         }
-        htmlCanciones += "</ul>";
-        document.getElementById('ejercicio6').innerHTML = htmlCanciones;
+        html6 += "</ul>";
+        document.getElementById('ejercicio6').innerHTML = html6;
     </script>
+    <div>
+        <h2><strong>Preguntas</strong></h2>
+    
+        <h3>¿Qué diferencias y semejanzas hay entre Java y JavaScript?</h3>
+        <p>Java se ejecuta en una JVM además de que es estático y robusto, mientras que JavaScript se ejecuta en navegadores, es dinámico y flexible</p>
+    
+        <h3>¿Qué métodos tiene el objeto Date? (Menciona al menos 5)</h3>
+        <p>getFullYear(), getMonth(), getDate(), getHours(), getMinutes().</p>
+    
+        <h3>¿Qué métodos tienen los arreglos? (Menciona al menos 5)</h3>
+        <p>at(), concat(), find(), join(), forEach().</p>
+    
+        <h3>¿Cómo se declara una variable con alcance local dentro de una función?</h3>
+        <p>Usando let o const dentro de la función.</p>
+    
+        <h3>¿Qué implicaciones tiene utilizar variables globales dentro de funciones?</h3>
+        <p>Pueden causar errores si varias funciones la usan, además es más dificil el manejo de estos scripts.</p>
+    </div>
+    <div>
+        <h1><strung>Referencias</strung></h1>
+        <p>MDN Contributors. (2017). <i>Array</i>. MDN web docs. https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array</p>
+        <p>MDN Contributors. (2024). <i>Date</i>. MDN web docs. https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Date</p>
+        <p>Meza, L. (2025). <i>¿Qué diferencias hay entre Java y JavaScript?</i>. Hack a boss. https://www.hackaboss.com/blog/diferencias-javascript-java</p>
+    </div>
 </body>
 </html>
