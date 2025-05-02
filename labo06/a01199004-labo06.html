@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>:)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .strength-bar {
+        height: 8px;
+        border-radius: 5px;
+        margin-top: 5px;
+        }
+        .strength-weak { width: 33%; background-color: red; }
+        .strength-medium { width: 66%; background-color: orange; }
+        .strength-strong { width: 100%; background-color: green; }
+
+        .hovered-title {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 2.5rem;
+        font-style: italic;
+        color: darkblue;
+        }
+    </style>
+    </head>
+    <body class="bg-light">
+
+    <div class="container mt-5">
+        <!-- Cambia estilo al pasar el mouse -->
+        <h2 class="mb-4" id="titulo" onmouseover="cambiarEstilo()" onmouseout="restaurarEstilo()">Validador de Contraseña</h2>
+
+        <form>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" id="password" class="form-control"
+                oninput="validarPassword()"
+                onfocus="mostrarAyuda('ayuda1')"
+                onblur="ocultarAyuda('ayuda1')">
+            <div id="strength" class="strength-bar"></div>
+            <small id="strengthMsg" class="form-text text-muted"></small>
+            <div id="ayuda1" class="form-text text-info" style="display:none;">
+            Usa mínimo 8 caracteres, con mayúsculas, números y símbolos como !@#.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+            <input type="password" id="confirmPassword" class="form-control"
+                oninput="verificarCoincidencia()"
+                onfocus="mostrarAyuda('ayuda2')"
+                onblur="ocultarAyuda('ayuda2')">
+            <small id="matchMsg" class="form-text"></small>
+            <div id="ayuda2" class="form-text text-info" style="display:none;">
+            Asegúrate de que coincida con la contraseña escrita arriba.
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <script>
+        function validarPassword() {
+        const password = document.getElementById("password").value;
+        const strengthBar = document.getElementById("strength");
+        const msg = document.getElementById("strengthMsg");
+
+        strengthBar.className = "strength-bar";
+        msg.textContent = "";
+
+        if (password.length === 0) return;
+
+        const isLong = password.length >= 8;
+        const hasNum = /\d/.test(password);
+        const hasSpecial = /[!@#$%^&*]/.test(password);
+        const hasUpper = /[A-Z]/.test(password);
+
+        let score = [isLong, hasNum, hasSpecial, hasUpper].filter(Boolean).length;
+
+        if (score <= 1) {
+            strengthBar.classList.add("strength-weak");
+            msg.textContent = "Débil";
+            msg.className = "form-text text-danger";
+        } else if (score === 2 || score === 3) {
+            strengthBar.classList.add("strength-medium");
+            msg.textContent = "Media";
+            msg.className = "form-text text-warning";
+        } else {
+            strengthBar.classList.add("strength-strong");
+            msg.textContent = "Fuerte";
+            msg.className = "form-text text-success";
+        }
+        }
+
+        function verificarCoincidencia() {
+        const pwd = document.getElementById("password").value;
+        const confirmPwd = document.getElementById("confirmPassword").value;
+        const matchMsg = document.getElementById("matchMsg");
+
+        if (confirmPwd.length === 0) {
+            matchMsg.textContent = "";
+            return;
+        }
+
+        if (pwd === confirmPwd) {
+            matchMsg.textContent = "¡Las contraseñas coinciden!";
+            matchMsg.className = "form-text text-success";
+        } else {
+            matchMsg.textContent = "Las contraseñas no coinciden.";
+            matchMsg.className = "form-text text-danger";
+        }
+        }
+
+        // Mostrar/ocultar ayuda contextual
+        function mostrarAyuda(id) {
+        document.getElementById(id).style.display = "block";
+        }
+
+        function ocultarAyuda(id) {
+        document.getElementById(id).style.display = "none";
+        }
+
+        // Cambiar estilo con eventos del mouse
+        function cambiarEstilo() {
+        document.getElementById("titulo").classList.add("hovered-title");
+        }
+
+        function restaurarEstilo() {
+        document.getElementById("titulo").classList.remove("hovered-title");
+        }
+    </script>
+    
+    <div>
+        <h2>Preguntas</h2>
+    
+        <h3>¿Por qué es una buena práctica usar JavaScript para validar los inputs antes de enviar al servidor?</h3>
+        <p>Permite mejorar la experiencia del usuario, además de que se valida en tiempo real y no se tiene que enviar información innecesaria al servidor.</p>
+    
+        <h3>¿Cómo puedes saltarte la seguridad de validaciones hechas con JavaScript?</h3>
+        <p>Usando la consola del navegador del usuario.</p>
+    
+        <h3>Si se puede saltar, ¿por qué sigue siendo buena práctica?</h3>
+        <p>Porque se prioriza un feedback inmediato antes que la misma seguridad.</p>
+    </div>    
+
+    <h3>Referencias</h3>
+        <ul>
+            <li>MDN Contributors. (2025). <i>Validación de formularios de datos</i>. MDN web docs. https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Forms/Form_validation</li>
+        </ul>
+
+    <footer class="bg-dark text-white text-center p-3">
+        <h4>Datos de contacto</h4>
+        <p><strong>Nombre:</strong> Oswaldo Isaias Hernández Santes</p>
+        <p><strong>Matrícula:</strong> A01199004</p>
+        <p><strong>Correo:</strong> a01199004@tec.mx</p>
+        <p><strong>Editor:</strong> Visual Studio Code</p>
+    </footer>
+    
+</body>
+</html>
