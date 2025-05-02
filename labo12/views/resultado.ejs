@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+    <%- include('includes/head') %>
+    <body>
+        <h1>Resultado</h1>
+        <ul>
+            <% resultado.forEach(item => { %>
+                <li><%= item %></li>
+            <% }) %>
+        </ul>
+        <a href="/formulario/form">Volver al formulario</a>
+        <%- include('includes/footer') %>
+    </body>
+</html>

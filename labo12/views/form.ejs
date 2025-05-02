@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es">
+    <%- include('includes/head') %>
+    <body>
+        <h1>Formulario</h1>
+        <form method="POST" action="/formulario/form">
+            <input type="number" name="indice" placeholder="Veces a imprimir" required><br>
+            <input type="text" name="imprimir" placeholder="Texto" required><br>
+            <input type="submit" value="Enviar">
+        </form>
+        <%- include('includes/footer') %>
+    </body>
+</html>
