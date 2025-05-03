@@ -1,0 +1,9 @@
+<%- include('includes/head') %>
+<h1><%= titulo %></h1>
+<ul>
+  <% datos.forEach(dato => { %>
+    <li><%= dato.valor %></li>
+  <% }); %>
+</ul>
+<a href="/add">Agregar nuevo dato</a>
+<%- include('includes/footer') %>
