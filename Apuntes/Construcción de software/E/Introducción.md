@@ -1,0 +1,5 @@
+- Los avances tecnológicos han revolucionado nuestros hogares y oficinas.
+- El progreso de la administración, las finanzas de la producción han conducido a la rápida adopción de sistemas automáticos capaces de facilitar tareas mecánicas y rutinarias.
+- En el corto periodo de tiempo, se ha logrado acceso a los enormes volúmenes de información:
+	- Las redes de transmisión de datos e información.
+	- Las bases de datos con acceso en línea, ubicadas en cualquier lugar, localizables mediante Internet.

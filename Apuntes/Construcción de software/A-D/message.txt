@@ -1,0 +1,136 @@
+Un *repositorio* es un sistema de control de versiones. Lo que se intenta hacer es tener un lugar donde esté todo el código del proyecto y cada miembro del proyecto pueda estar añadiendo cambios al mismo, detectando cuando hay un nuevo cambio y el proyecto crezca de manera organizada.
+Hay que saber eliminar y crear *branches*.
+
+Algunas de las herramientas de versionamiento más conocidas son:
+- Git
+- Hg
+- SVN
+- HelixCore
+- CVS
+- Bazaar, etc.
+
+Tenemos el repositorio local y remoto. Vamos a tener un repositorio en la nube donde estarán los cambios globales, y cada computadora del equipo hará cambios locales en el repositorio local.
+
+Todo lo que subamos debe ser una versión estable para no generar conflictos.
+
+**Áreas de versionamiento**
+En el repositorio local, el *working tree* es cuando abrimos la carpeta del proyecto y salen los archivos (por ejemplo, un proyecto de página web). El repositorio local sigue siento el working tree, pero el repositorio local es aquello que ya está guardado dentro y sincronizado con el remoto. Cuando hago un cambio en algún archivo del working tree, tengo que poner un comando para pasarlo al *staging area*. "Esto será nuevo para nuestra línea de tiempo local".
+
+El paso entre el working tree y el local repo será el staging area.
+
+```
+index.html --add/restore-> staging area <-commit/reset-> local repo
+```
+Si alguien quisiera empujar desde su local repo al remote repo, necesitaría haber trabajado en la última versión del documento, o no se podrá hacer. Es importante ponerse de acuerdo y comunicarse para que no ocurran problemas.
+
+Es importante hacer *commit* cada que se pueda.
+
+**RESUMEN**
+Working tree: pedazo del proyecto en cualquier momento (usualmente es el momento actual) cuando agrego código, modifico el working tree
+Staging area: donde se colocan los cambios del working tree antes de hacerlos permanentes
+Repositorio: colección de commits (cambios permanentes realizados a través de la historia del proyecto)
+```
+➜  ~ mkdir Git101
+➜  ~ cd Git101
+➜  Git101 code .
+zsh: command not found: code
+➜  Git101 git init
+astuce : Usando 'master' como el nombre de la rama inicial. Este nombre de rama predeterminado
+astuce : está sujeto a cambios. Para configurar el nombre de la rama inicial para usar en todos
+astuce : de sus nuevos repositorios, reprimiendo esta advertencia, llama a:
+astuce :
+astuce : 	git config --global init.defaultBranch <nombre>
+astuce :
+astuce : Los nombres comúnmente elegidos en lugar de 'master' son 'main', 'trunk' y
+astuce : 'development'. Se puede cambiar el nombre de la rama recién creada mediante este comando:
+astuce :
+astuce : 	git branch -m <nombre>
+Inicializado repositorio Git vacío en /Users/ivanfv/Git101/.git/
+➜  Git101 git:(master) git config user.email upp.estancia@gmail.com
+➜  Git101 git:(master) 
+```
+**Mostrar archivos**
+```
+ls
+```
+**Para añadir a staging area**
+```
+git add archivo.txt
+```
+**Para añadir a repositorio local**
+```
+git commit -m "mensaje de que cambio se hizo"
+```
+**Para ver los cambios**
+```
+git diff --cached (staging area)
+git diff (working tree)
+git status
+```
+Al hacer un cambio en un txt, y hacer git diff, me saldrán los cambios que hice y debemos guardarlo.
+```
+diff --git a/message.txt b/message.txt
+index 0165e86..118f108 100644
+--- a/message.txt
++++ b/message.txt
+@@ -1 +1 @@
+-git is awesom
++git is awesome
+(END)
+```
+**Para agregar el archivo con modificaciones y añadir un mensaje**
+```
+git commit -am "edit message"
+```
+**Para ver historial de mi repositorio**
+```
+git status
+```
+**Para ver más específico**
+```
+git show (hash)
+```
+**PARA BAJAR REPOSITORIO**
+```
+➜  ~ git clone https://github.com/huichapan/repositorio-prueba.git
+Clonando en 'repositorio-prueba'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Recibiendo objetos: 100% (3/3), listo.
+➜  ~ ls
+Applications                                                                                  R-Studio
+CLionProjects                                                                                 a.circ
+Cisco Packet Tracer 8.2.2                                                                     b.circ
+Creative Cloud Files Personal Account upp.estancia@gmail.com 92AF3E6759B2E7620A495DC3@AdobeID c.circ
+Desktop                                                                                       circuito1.circ
+Documents                                                                                     circuito2.circ
+Documents-assets                                                                              edosuperior.m
+Downloads                                                                                     ejercicio24abr.m
+Git101                                                                                        file.csv
+Library                                                                                       matlab_crash_dump.68480-1
+M4Actividad3_v2.m                                                                             pico-sdk
+Movies                                                                                        repositorio-prueba
+Music                                                                                         saves
+Pictures                                                                                      settings
+Public                                                                                        statistics
+PycharmProjects                                                                               yfa.py
+➜  ~ cd repositorio-prueba
+➜  repositorio-prueba git:(main) 
+```
+```
+➜  ~ cd repositorio-prueba
+➜  repositorio-prueba git:(main) clear
+
+➜  repositorio-prueba git:(main) echo "git es chido" > message.txt
+➜  repositorio-prueba git:(main) ✗ code .
+zsh: command not found: code
+➜  repositorio-prueba git:(main) ✗ git add message.txt
+➜  repositorio-prueba git:(main) ✗ git commit -m "added message.txt"
+[main 7adf3bf] added message.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 message.txt
+➜  repositorio-prueba git:(main) git diff
+➜  repositorio-prueba git:(main) git diff --cached
+```
