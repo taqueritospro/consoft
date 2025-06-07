@@ -1,0 +1,44 @@
+<%- include('includes/head') %>
+<h1><%= titulo %></h1>
+
+<ul id="lista-datos">
+  <% datos.forEach(dato => { %>
+    <li><%= dato.valor %></li>
+  <% }); %>
+</ul>
+
+<input type="text" id="input-valor" placeholder="Escribe un valor" required>
+<button id="btn-guardar">Guardar (AJAX)</button>
+
+<p id="mensaje"></p>
+
+<a href="/add">Agregar nuevo dato (modo normal)</a>
+
+<%- include('includes/footer') %>
+
+<script>
+document.getElementById('btn-guardar').addEventListener('click', () => {
+    const valor = document.getElementById('input-valor').value;
+
+    fetch('/ajax/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ valor: valor })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const lista = document.getElementById('lista-datos');
+        const nuevoLi = document.createElement('li');
+        nuevoLi.textContent = data.valor;
+        lista.appendChild(nuevoLi);
+
+        document.getElementById('mensaje').textContent = data.mensaje;
+        document.getElementById('input-valor').value = '';
+    })
+    .catch(err => {
+        console.error('Error:', err);
+    });
+});
+</script>
