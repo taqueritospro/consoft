@@ -1,0 +1,30 @@
+# Node modules (paquetes instalados con npm)
+node_modules/
+
+# Archivos de registro
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno/locales (si llegas a usarlos)
+.env
+.env.local
+.env.*.local
+
+# Archivos generados por el editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Archivos del sistema operativo
+*.swp
+*~
+
+# Otros
+package-lock.json
